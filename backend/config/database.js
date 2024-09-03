@@ -12,4 +12,4 @@ const databaseConnection=()=>{
     })
 
 }
-export default databaseConnection;
+export{ databaseConnection};

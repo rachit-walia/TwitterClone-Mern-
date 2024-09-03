@@ -6,6 +6,7 @@ export const Register = async (req, res) => {
     try {
         const { Name, Username, Email, Password } = req.body;
 
+        // Check if all fields are provided
         if (!Name || !Username || !Email || !Password) {
             return res.status(400).json({
                 message: "All fields are required.",
@@ -13,7 +14,8 @@ export const Register = async (req, res) => {
             });
         }
 
-        const existingUser = await User.findOne({ Email });
+        // Check if user already exists
+        const existingUser = await User.findOne({ Email }); // Corrected: Use await for asynchronous call
         if (existingUser) {
             return res.status(409).json({
                 message: "User already exists.",
@@ -21,8 +23,10 @@ export const Register = async (req, res) => {
             });
         }
 
-        const hashedPassword = await bcryptjs.hash(Password, 16);
+        // Hash the password
+        const hashedPassword = await bcryptjs.hash(Password, 10); // Adjusted salt rounds to 10 for typical use
 
+        // Create a new user
         await User.create({
             Name,
             Username,
@@ -46,7 +50,9 @@ export const Register = async (req, res) => {
 
 export const Login = async (req, res) => {
     try {
-        const { Email, Password } = req.body; // Corrected to req.body
+        const { Email, Password } = req.body;
+
+        // Check if all fields are provided
         if (!Email || !Password) {
             return res.status(400).json({
                 message: "All fields are required.",
@@ -54,15 +60,17 @@ export const Login = async (req, res) => {
             });
         }
 
-        const user = await User.findOne({ Email }); // Corrected findOne method call
-        if (!user) { // Corrected variable name check
+        // Find the user by email
+        const user = await User.findOne({ Email });
+        if (!user) {
             return res.status(401).json({
                 message: "User does not exist with this email.",
                 success: false,
             });
         }
 
-        const isMatch = await bcryptjs.compare(Password, user.Password); // Corrected argument order
+        // Compare the password
+        const isMatch = await bcryptjs.compare(Password, user.Password);
         if (!isMatch) {
             return res.status(401).json({
                 message: "Incorrect email or password.",
@@ -70,19 +78,24 @@ export const Login = async (req, res) => {
             });
         }
 
+        // Prepare token data
         const tokenData = {
-            userId: user._id, // Corrected property name
+            userId: user._id,
         };
 
-        const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET, { expiresIn: "1d" });
+        // Generate JWT token
+        const token = jwt.sign(tokenData, process.env.TOKEN_SECRET, { expiresIn: "1d" });
 
-        return res.status(200).cookie("token", token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true }).json({ // Corrected to 200 for successful login and cookie settings
-            message: `Welcome back, ${user.Name}`, // Corrected greeting message
-            success: true,
-        });
+        // Set the cookie with the token
+        return res.status(200)
+            .cookie("token", token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true })
+            .json({
+                message: `Welcome back, ${user.Name}`, // Corrected to use template literals properly
+                success: true,
+            });
 
     } catch (error) {
-        console.error("Error during login:", error); // Corrected error handling
+        console.error("Error during login:", error);
         return res.status(500).json({
             message: "Server error, please try again later.",
             success: false,
