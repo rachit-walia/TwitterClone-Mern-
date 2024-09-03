@@ -13,12 +13,12 @@ const RightSidebar=()=>{
                 <div className='flex items-center justify-between my-3'>
                     <div className='flex'>
                         <div>
-                        <Avatar src="https://imgs.search.brave.com/NK68W2_DWW98-CDxv-y5sRnL90GasGFoaX-DWw5r3qA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU4/OTgyNDgzNi9waG90/by9jdXRlLWJyb3du/LWRvZy10aGF0LXNt/aWxlcy1pc29sYXRl/ZC1iYWNrZ3JvdW5k/LndlYnA_Yj0xJnM9/NjEyeDYxMiZ3PTAm/az0yMCZjPU0tMzJw/QUVkcm1vM2kzMWNZ/bVFnZHFiWGFHVldP/eUpFVzBxd2E3dWly/dTg9" size="40" round={true} />
+                        <Avatar src="https://imgs.search.brave.com/Bozh4LBaQo8R-1Vrdj5L5rfqw1NeuZd0T1FkLOHnp8k/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGhlZmFtb3VzcGVv/cGxlLmNvbS9wcm9m/aWxlcy90aHVtYnMv/bWljaGVsZS1tb3Jy/b25lLTQuanBn" size="40" round={true} />
                         </div>
                         
                     <div className='ml-2 '>
-                        <h1 className='font-bold'>Rachit</h1>
-                        <p className='text-sm'>rachit@3</p>
+                        <h1 className='font-bold'>Michele Morrone</h1>
+                        <p className='text-sm'>Michele@offical</p>
                     </div>
                     </div>
                     <div>
@@ -29,12 +29,12 @@ const RightSidebar=()=>{
                  <div className='flex items-center justify-between my-4'>
                     <div className='flex'>
                         <div>
-                        <Avatar src="https://imgs.search.brave.com/NK68W2_DWW98-CDxv-y5sRnL90GasGFoaX-DWw5r3qA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU4/OTgyNDgzNi9waG90/by9jdXRlLWJyb3du/LWRvZy10aGF0LXNt/aWxlcy1pc29sYXRl/ZC1iYWNrZ3JvdW5k/LndlYnA_Yj0xJnM9/NjEyeDYxMiZ3PTAm/az0yMCZjPU0tMzJw/QUVkcm1vM2kzMWNZ/bVFnZHFiWGFHVldP/eUpFVzBxd2E3dWly/dTg9" size="40" round={true} />
+                        <Avatar src="https://imgs.search.brave.com/pLFj9x_1QeyMFsWZPl1KkML8MK-iFZIis_RDAFUR9B4/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9oYW1h/cml3ZWIuY29tL3By/b2ZpbGVzL2ltYWdl/cy9wcm9maWxlL1Rh/YXBzZWUtUGFubnUu/anBn" size="40" round={true} />
                         </div>
                         
                     <div className='ml-2 '>
-                        <h1 className='font-bold'>Rachit</h1>
-                        <p className='text-sm'>rachit@3</p>
+                        <h1 className='font-bold'>Tapsee pannu</h1>
+                        <p className='text-sm'>tapseee</p>
                     </div>
                     </div>
                     <div>
@@ -45,12 +45,12 @@ const RightSidebar=()=>{
                  <div className='flex items-center justify-between'>
                     <div className='flex'>
                         <div>
-                        <Avatar src="https://imgs.search.brave.com/NK68W2_DWW98-CDxv-y5sRnL90GasGFoaX-DWw5r3qA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU4/OTgyNDgzNi9waG90/by9jdXRlLWJyb3du/LWRvZy10aGF0LXNt/aWxlcy1pc29sYXRl/ZC1iYWNrZ3JvdW5k/LndlYnA_Yj0xJnM9/NjEyeDYxMiZ3PTAm/az0yMCZjPU0tMzJw/QUVkcm1vM2kzMWNZ/bVFnZHFiWGFHVldP/eUpFVzBxd2E3dWly/dTg9" size="40" round={true} />
+                        <Avatar src="https://imgs.search.brave.com/ABwsGzBqduwf-b0AwgdIPQ3OgMOZQJfKlcQnpeiT2RA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aW5kaWV3aXJlLmNv/bS93cC1jb250ZW50/L3VwbG9hZHMvMjAx/OC8xMC90aGUtZGFy/ay1rbmlnaHQtY2hy/aXN0aWFuLWJhbGUu/anBnP3c9MTAwMCZo/PTU2MyZjcm9wPTE" size="40" round={true} />
                         </div>
                         
                     <div className='ml-2 '>
-                        <h1 className='font-bold'>Rachit</h1>
-                        <p className='text-sm'>rachit@3</p>
+                        <h1 className='font-bold'>Christian Bale</h1>
+                        <p className='text-sm'>christ@bale</p>
                     </div>
                     </div>
                     <div>
