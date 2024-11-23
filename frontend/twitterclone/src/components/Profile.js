@@ -1,43 +1,88 @@
 import React from 'react';
-import { IoIosArrowRoundBack } from "react-icons/io";
-import { Link } from 'react-router-dom';
-import Avatar from 'react-avatar';
+import { IoMdArrowBack } from "react-icons/io";
+import { Link, useParams } from 'react-router-dom';
+import Avatar from "react-avatar";
+import { useSelector,useDispatch } from "react-redux";
+import useGetProfile from '../hooks/useGetProfile';
+import axios from "axios";
+import { USER_API_END_POINT } from '../utils/constant';
+import toast from "react-hot-toast"
+import { followingUpdate } from '../redux/userSlice';
+import { getRefresh } from '../redux/tweetSlice';
 
 const Profile = () => {
+    const { user, profile } = useSelector(store => store.user);
+    const { id } = useParams();
+    useGetProfile(id);
+    const dispatch = useDispatch();
+
+    const followAndUnfollowHandler = async () => {
+        if(user.following.includes(id)){
+            // unfollow
+            try {
+                axios.defaults.withCredentials = true;
+                const res = await axios.post(`${USER_API_END_POINT}/unfollow/${id}`, {id:user?._id});
+                console.log(res);
+                dispatch(followingUpdate(id));
+                dispatch(getRefresh());
+                toast.success(res.data.message);
+            } catch (error) {
+                toast.error(error.response.data.message);
+                console.log(error);
+            }
+            
+        }else{
+            // follow
+            try {
+                axios.defaults.withCredentials = true;
+                const res = await axios.post(`${USER_API_END_POINT}/follow/${id}`, {id:user?._id});
+                console.log(res);
+                dispatch(followingUpdate(id));
+                dispatch(getRefresh());
+                toast.success(res.data.message);
+            } catch (error) {
+                toast.error(error.response.data.message);
+                console.log(error);
+            }
+        }
+    }
+
     return (
-        <div className='w-[60%] border border-l border-r border-gray-200'>
+        <div className='w-[50%] border-l border-r border-gray-200'>
             <div>
                 <div className='flex items-center py-2'>
                     <Link to="/" className='p-2 rounded-full hover:bg-gray-100 hover:cursor-pointer'>
-                        <IoIosArrowRoundBack size="24px" />
+                        <IoMdArrowBack size="24px" />
                     </Link>
                     <div className='ml-2'>
-                        <h1 className='font-bold text-lg'>Rachit</h1>
-                        <p className='text-gray-500 text-sm'>19 Post</p>
+                        <h1 className='font-bold text-lg'>{profile?.name}</h1>
+                        <p className='text-gray-500 text-sm'>10 post</p>
                     </div>
                 </div>
-                {/* Set a fixed height and make the image cover the full width of the div */}
-                <img 
-                    src="https://imgs.search.brave.com/X-LVsNyIbrLPPEltjQFBs9ngBcpIUZSTYMFn7d1pFhc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvdGh1bWJu/YWlsL3NvLXNhZC1p/bWFnZS1vZi1tYW4t/MTFweDllaHdhd3p4/eDdzei53ZWJw" 
-                    alt='heyhello'
-                    className="w-full h-64 object-cover"
-                />
-                <div className='absolute top-52 ml-4 border-4 border-gray rounded-full'>
-                    <Avatar src="https://imgs.search.brave.com/NK68W2_DWW98-CDxv-y5sRnL90GasGFoaX-DWw5r3qA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU4/OTgyNDgzNi9waG90/by9jdXRlLWJyb3du/LWRvZy10aGF0LXNt/aWxlcy1pc29sYXRl/ZC1iYWNrZ3JvdW5k/LndlYnA_Yj0xJnM9/NjEyeDYxMiZ3PTAm/az0yMCZjPU0tMzJw/QUVkcm1vM2kzMWNZ/bVFnZHFiWGFHVldP/eUpFVzBxd2E3dWly/dTg9" size="90" round={true} />
+                <img src="https://pbs.twimg.com/profile_banners/1581707412922200067/1693248932/1080x360" alt="banner" />
+                <div className='absolute top-52 ml-2 border-4 border-white rounded-full'>
+                    <Avatar src="https://pbs.twimg.com/profile_images/1703261403237502976/W0SFbJVS_400x400.jpg" size="120" round={true} />
                 </div>
-                <div className='text-right m-2'>
-                    <button className='px-4 py-1 hover:bg-gray-300 rounded-full border border-gray-400'>Edit Profile</button>
+                <div className='text-right m-4'>
+                    {
+                        profile?._id === user?._id ? (
+                            <button className='px-4 py-1 hover:bg-gray-200 rounded-full border border-gray-400'>Edit Profile</button>
+
+                        ) : (
+                            <button onClick={followAndUnfollowHandler} className='px-4 py-1 bg-black text-white rounded-full'>{user.following.includes(id) ? "Following" : "Follow"}</button>
+                        )
+                    }
                 </div>
                 <div className='m-4'>
-                    <h1 className='font-bold text-2xl'>Rachit Walia</h1>
-                    <p>Rachitwalia3</p>
+                    <h1 className='font-bold text-xl'>{profile?.name}</h1>
+                    <p>{`@${profile?.username}`}</p>
                 </div>
                 <div className='m-4 text-sm'>
                     <p>🌐 Exploring the web's endless possibilities with MERN Stack 🚀 | Problem solver by day, coder by night 🌙 | Coffee lover ☕ | Join me on this coding journey!</p>
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default Profile;
+export default Profile

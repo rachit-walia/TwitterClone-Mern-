@@ -1,67 +1,92 @@
 import React, { useState } from 'react';
+import axios from "axios";
+import { USER_API_END_POINT } from "../utils/constant";
+import toast from "react-hot-toast";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import { getUser } from '../redux/userSlice';
 
 const Login = () => {
-    const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(true);
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-    const loginSignupHandler = () => {
-        setIsLogin(!isLogin);
-    };
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    if (isLogin) {
+      // login
+      try {
+        const res = await axios.post(`${USER_API_END_POINT}/login`, { email, password }, {
+          headers: {
+            'Content-Type': "application/json"
+          },
+          withCredentials: true
+        }); 
+        dispatch(getUser(res?.data?.user));
+        if(res.data.success){
+          navigate("/");
+          toast.success(res.data.message);
+        }
+      } catch (error) {
+        toast.success(error.response.data.message);
+        console.log(error);
+      }
+    } else {
+      // signup
+      try {
+        const res = await axios.post(`${USER_API_END_POINT}/register`, { name, username, email, password }, {
+          headers: {
+            'Content-Type': "application/json"
+          },
+          withCredentials: true
+        }); 
+        if(res.data.success){
+          setIsLogin(true);
+          toast.success(res.data.message);
+        }
+      } catch (error) {
+        toast.success(error.response.data.message);
+        console.log(error);
+      }
+    }
+  }
 
-    return (
-        <div className='w-screen h-screen flex items-center justify-center bg-gray-100'>
-            <div className='flex items-center justify-evenly w-[80%] bg-white p-8 rounded-lg shadow-lg'>
-                <div>
-                    <img
-                        className='ml-4'
-                        width={"270px"}
-                        src='https://imgs.search.brave.com/aqB_1MrCNFw2qHhI7HfUwq5kJ8L-bdVz_Lsn3Ac_tsk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA2LzgxLzMwLzQ3/LzM2MF9GXzY4MTMw/NDc4MF92SkZoYlVt/VWhlZXhKMnVVQ2hk/MW5PdTFQZ1A5TjdQ/TS5qcGc'
-                        alt='twitter-logo'
-                    />
-                </div>
-                <div>
-                    <div className='my-5'>
-                        <h1 className='font-bold text-6xl'>Happening now</h1>
-                    </div>
-                    <h1 className='mt-4 mb-2 text-2xl font-bold'>{isLogin ? 'Login' : 'Create account'}</h1>
-                    <form className='flex flex-col w-[50%]'>
-                        {!isLogin && (
-                            <>
-                                <input
-                                    type='text'
-                                    placeholder='Name'
-                                    className='outline-blue-500 border border-gray-800 px-3 py-1 rounded-full my-1 font-semibold'
-                                />
-                                <input
-                                    type='text'
-                                    placeholder='Username'
-                                    className='outline-blue-500 border border-gray-800 px-3 py-1 rounded-full my-1 font-semibold'
-                                />
-                            </>
-                        )}
-                        <input
-                            type='email'
-                            placeholder='Email'
-                            className='outline-blue-500 border border-gray-800 px-3 py-1 rounded-full my-1 font-semibold'
-                        />
-                        <input
-                            type='password'
-                            placeholder='Password'
-                            className='outline-blue-500 border border-gray-800 px-3 py-1 rounded-full my-1 font-semibold'
-                        />
-                        <button className='bg-[#1D9BF0] border-none py-2 my-4 rounded-full text-lg text-white'>
-                            {isLogin ? 'Login' : 'Create account'}
-                        </button>
-                    </form>
-                    <h1>
-                        {isLogin ? 'Don’t have an account?' : 'Already have an account?'}{' '}
-                        <span className='text-blue-500 cursor-pointer' onClick={loginSignupHandler}>
-                            {isLogin ? 'Create account' : 'Login'}
-                        </span>
-                    </h1>
-                </div>
-            </div>
+
+  const loginSignupHandler = () => {
+    setIsLogin(!isLogin);
+  }
+
+  return (
+    <div className='w-screen h-screen flex items-center justify-center'>
+      <div className='flex items-center justify-evenly w-[80%]'>
+        <div>
+          <img className='ml-5' width={"300px"} src="https://www.edigitalagency.com.au/wp-content/uploads/new-Twitter-logo-x-black-png-1200x1227.png" alt="twitter-logo" />
         </div>
-    );
-};
+        <div>
+          <div className='my-5'>
+            <h1 className='font-bold text-6xl'>Happening now.</h1>
+          </div>
+          <h1 className='mt-4 mb-2 text-2xl font-bold'>{isLogin ? "Login" : "Singup"}</h1>
+          <form onSubmit={submitHandler} className='flex flex-col w-[55%]'>
+            {
+              !isLogin && (<>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name' className="outline-blue-500 border border-gray-800 px-3 py-2 rounded-full my-1 font-semibold" />
+                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' className="outline-blue-500 border border-gray-800 px-3 py-2 rounded-full my-1 font-semibold" />
+              </>)
+            }
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' className="outline-blue-500 border border-gray-800 px-3 py-2 rounded-full my-1 font-semibold" />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' className="outline-blue-500 border border-gray-800 px-3 py-2 rounded-full my-1 font-semibold" />
+            <button className='bg-[#1D9BF0] border-none py-2 my-4 rounded-full text-lg text-white'>{isLogin ? "Login" : "Create Account"}</button>
+            <h1>{isLogin ? "Do not have an account?" : "Already have an account?"} <span onClick={loginSignupHandler} className='font-bold text-blue-600 cursor-pointer'>{isLogin ? "Signup" : "Login"}</span></h1>
+          </form>
+        </div>
+      </div>
+    </div>
+  )
+}
 
-export default Login;
+export default Login
