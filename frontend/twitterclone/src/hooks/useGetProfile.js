@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import {useDispatch} from "react-redux";
 import { getMyProfile } from "../redux/userSlice";
 
+
+// useGet
 const useGetProfile = (id) => {
     const dispatch = useDispatch();
     useEffect(()=>{
