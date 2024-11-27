@@ -1,0 +1,32 @@
+/* .chat-box {
+    height: 400px;
+    overflow-y: scroll;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.my-message {
+    text-align: right;
+    background-color: #dcf8c6;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 8px;
+}
+
+.their-message {
+    text-align: left;
+    background-color: #f1f0f0;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 8px;
+}
+
+input {
+    width: 80%;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px;
+} */

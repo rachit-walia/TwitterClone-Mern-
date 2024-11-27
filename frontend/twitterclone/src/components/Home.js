@@ -5,6 +5,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import useOtherUsers from '../hooks/useOtherUsers';
 import { useSelector } from "react-redux";
 import useGetMyTweets from '../hooks/useGetMyTweets';
+import Feed from './Feed';
 
 
 const Home = () => {
@@ -24,6 +25,7 @@ const Home = () => {
     <div className='flex justify-between w-[80%] mx-auto'>
       <LeftSidebar />
       <Outlet />
+      <Feed />
       <RightSidebar otherUsers={otherUsers} />
     </div>
   )
