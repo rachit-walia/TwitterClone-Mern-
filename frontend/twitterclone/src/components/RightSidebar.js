@@ -109,8 +109,9 @@ const RightSidebar = ({ otherUsers, currentUserId }) => {
   const navigate = useNavigate();
 
   const handleChat = (otherUserId) => {
+    const id1=localStorage.getItem("id");
     // Navigate to the chat page with both userId and otherUserId
-    navigate(`/chat/${currentUserId}/${otherUserId}`);
+    navigate(`/chat/${id1}/${otherUserId}`);
   };
 
   return (

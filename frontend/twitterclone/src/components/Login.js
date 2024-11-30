@@ -28,6 +28,7 @@ const Login = () => {
         }); 
         dispatch(getUser(res?.data?.user));
         if(res.data.success){
+          localStorage.setItem("id", res.data.user._id )
           navigate("/");
           toast.success(res.data.message);
         }
