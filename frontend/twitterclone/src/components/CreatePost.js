@@ -1,3 +1,111 @@
+// import React, { useState } from "react";
+// import Avatar from "react-avatar";
+// import { CiImageOn } from "react-icons/ci";
+// import axios from "axios";
+// import { TWEET_API_END_POINT } from "../utils/constant";
+// import toast from "react-hot-toast";
+// import { useSelector, useDispatch } from "react-redux";
+// import { getAllTweets, getIsActive, getRefresh } from "../redux/tweetSlice";
+
+// const CreatePost = () => {
+//   const [description, setDescription] = useState("");
+//   const { user } = useSelector((store) => store.user);
+//   const { isActive } = useSelector((store) => store.tweet);
+//   const dispatch = useDispatch();
+
+//   const submitHandler = async () => {
+//     try {
+//       const res = await axios.post(
+//         `${TWEET_API_END_POINT}/create`,
+//         { description, id: user?._id },
+//         {
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           withCredentials: true,
+//         }
+//       );
+//       dispatch(getRefresh());
+//       if (res.data.success) {
+//         toast.success(res.data.message);
+//       }
+//     } catch (error) {
+//       toast.error(error.response.data.message);
+//       console.error(error);
+//     }
+//     setDescription("");
+//   };
+
+//   const forYouHandler = () => {
+//     dispatch(getIsActive(true));
+//   };
+//   const followingHandler = () => {
+//     dispatch(getIsActive(false));
+//   };
+
+//   return (
+//     <div className="w-full bg-gray-900 text-white">
+//       <div>
+//         {/* For You and Following Tabs */}
+//         <div className="flex items-center justify-evenly border-b border-gray-700">
+//           <div
+//             onClick={forYouHandler}
+//             className={`${
+//               isActive
+//                 ? "border-b-4 border-blue-500"
+//                 : "border-b-4 border-transparent"
+//             } cursor-pointer hover:bg-gray-800 w-full text-center px-4 py-3`}
+//           >
+//             <h1 className="font-semibold text-gray-300 text-lg">For You</h1>
+//           </div>
+//           <div
+//             onClick={followingHandler}
+//             className={`${
+//               !isActive
+//                 ? "border-b-4 border-blue-500"
+//                 : "border-b-4 border-transparent"
+//             } cursor-pointer hover:bg-gray-800 w-full text-center px-4 py-3`}
+//           >
+//             <h1 className="font-semibold text-gray-300 text-lg">Following</h1>
+//           </div>
+//         </div>
+
+//         {/* Post Input Section */}
+//         <div>
+//           <div className="flex items-center p-4">
+//             <Avatar
+//               src="https://pbs.twimg.com/profile_images/1703261403237502976/W0SFbJVS_400x400.jpg"
+//               size="40"
+//               round={true}
+//             />
+//             <input
+//               value={description}
+//               onChange={(e) => setDescription(e.target.value)}
+//               className="w-full outline-none border-none text-lg ml-2 bg-gray-900 text-gray-200 placeholder-gray-500"
+//               type="text"
+//               placeholder="What is happening?!"
+//             />
+//           </div>
+
+//           {/* Post Button */}
+//           <div className="flex items-center justify-between p-4 border-b border-gray-700">
+//             <div className="text-gray-400 hover:text-gray-300">
+//               <CiImageOn size="24px" />
+//             </div>
+//             <button
+//               onClick={submitHandler}
+//               className="bg-blue-500 px-4 py-1 text-lg text-white border-none rounded-full hover:bg-blue-400 transition duration-200"
+//             >
+//               Post
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default CreatePost;
 import React, { useState } from "react";
 import Avatar from "react-avatar";
 import { CiImageOn } from "react-icons/ci";
@@ -44,19 +152,19 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="w-full bg-gray-900 text-white">
+    <div className="w-full bg-white text-gray-800">
       <div>
         {/* For You and Following Tabs */}
-        <div className="flex items-center justify-evenly border-b border-gray-700">
+        <div className="flex items-center justify-evenly border-b border-gray-300">
           <div
             onClick={forYouHandler}
             className={`${
               isActive
                 ? "border-b-4 border-blue-500"
                 : "border-b-4 border-transparent"
-            } cursor-pointer hover:bg-gray-800 w-full text-center px-4 py-3`}
+            } cursor-pointer hover:bg-gray-100 w-full text-center px-4 py-3`}
           >
-            <h1 className="font-semibold text-gray-300 text-lg">For You</h1>
+            <h1 className="font-semibold text-gray-800 text-lg">For You</h1>
           </div>
           <div
             onClick={followingHandler}
@@ -64,9 +172,9 @@ const CreatePost = () => {
               !isActive
                 ? "border-b-4 border-blue-500"
                 : "border-b-4 border-transparent"
-            } cursor-pointer hover:bg-gray-800 w-full text-center px-4 py-3`}
+            } cursor-pointer hover:bg-gray-100 w-full text-center px-4 py-3`}
           >
-            <h1 className="font-semibold text-gray-300 text-lg">Following</h1>
+            <h1 className="font-semibold text-gray-800 text-lg">Following</h1>
           </div>
         </div>
 
@@ -81,15 +189,15 @@ const CreatePost = () => {
             <input
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full outline-none border-none text-lg ml-2 bg-gray-900 text-gray-200 placeholder-gray-500"
+              className="w-full outline-none border-none text-lg ml-2 bg-white text-gray-800 placeholder-gray-500"
               type="text"
               placeholder="What is happening?!"
             />
           </div>
 
           {/* Post Button */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-700">
-            <div className="text-gray-400 hover:text-gray-300">
+          <div className="flex items-center justify-between p-4 border-b border-gray-300">
+            <div className="text-gray-600 hover:text-gray-800">
               <CiImageOn size="24px" />
             </div>
             <button

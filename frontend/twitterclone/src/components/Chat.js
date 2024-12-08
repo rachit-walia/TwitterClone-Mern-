@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import socket from "../socket";
+import './Chat.css';
 import axios from "axios";
+
 import { useParams } from "react-router-dom";
 
 const Chat = () => {
-  const { userId, otherUserId } = useParams(); // Fixed typo here
+  const { userId, otherUserId } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -67,40 +69,41 @@ const Chat = () => {
   }, [messages]);
 
   return (
-    <div className="bg-gray-900 text-white h-screen flex flex-col">
-      <div className="chat-box flex-1 overflow-y-auto p-4">
+    <div className="chat-container">
+      <div className="chat-box">
         {isLoading ? (
-          <p>Loading messages...</p>
+          <p className="loading-text">Loading messages...</p>
         ) : messages.length === 0 ? (
-          <p>No messages yet. Start the conversation!</p>
+          <p className="no-messages">No messages yet. Start the conversation!</p>
         ) : (
           messages.map((msg, index) => (
             <div
               key={index}
-              className={`my-2 p-2 rounded-lg ${
-                msg.senderId === userId
-                  ? "bg-blue-600 self-end"
-                  : "bg-gray-700 self-start"
+              className={`message ${
+                msg.senderId === userId ? "sent" : "received"
               }`}
             >
               <p>{msg.content}</p>
+              <span className="message-timestamp">
+                {new Date(msg.timestamp).toLocaleTimeString()}
+              </span>
             </div>
           ))
         )}
         <div ref={messagesEndRef} /> {/* For auto-scrolling */}
       </div>
-      <div className="chat-input-wrapper flex p-4 bg-gray-800">
+      <div className="chat-input-wrapper">
         <input
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type a message..."
-          className="flex-1 p-2 bg-gray-700 text-white rounded-lg outline-none"
+          className="chat-input"
         />
         <button
           onClick={sendMessage}
           disabled={!newMessage.trim()}
-          className="ml-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition duration-200"
+          className={`send-button ${!newMessage.trim() ? "disabled" : ""}`}
         >
           Send
         </button>
